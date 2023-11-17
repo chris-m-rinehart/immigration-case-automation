@@ -6,10 +6,12 @@ def submit_a_number(session, client_a_number):
 
     # Splitting the A-Number into individual digits
     digits = list(client_a_number)
-
-    # Assuming the website has fields named 'digit1', 'digit2', ..., 'digit9'
-    i = -1
-    data = {f'3e9af2d5-6fd2-44bf-9391-f86e83d609c4-{i+1}': digit for i, digit in enumerate(digits)}
+    
+    # Constructing data payload for the POST request
+    data = {}
+    for i, digit in enumerate(digits):
+        input_id = f"3e9af2d5-6fd2-44bf-9391-f86e83d609c4-{i}"
+        data[input_id] = digit
 
     response = session.post(url, data=data)
     return response
