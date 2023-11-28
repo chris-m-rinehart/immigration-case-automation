@@ -4,6 +4,11 @@ from bs4 import BeautifulSoup
 def submit_a_number(session, client_a_number):
     url = 'https://acis.eoir.justice.gov/en/'
 
+    # Ensure client_a_number is a string and has the correct length
+    client_a_number = str(client_a_number)
+    if len(client_a_number) != 9:
+        raise ValueError("A-Number must be 9 digits long")
+
     # Splitting the A-Number into individual digits
     digits = list(client_a_number)
 
@@ -16,6 +21,7 @@ def submit_a_number(session, client_a_number):
     # Sending a POST request to the URL with the constructed data payload
     response = session.post(url, data=data)
     return response
+
 
 
 def get_court_date_info(session):
