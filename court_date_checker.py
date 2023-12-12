@@ -1,14 +1,10 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-import logging
-import sys
 from bs4 import BeautifulSoup
 
 def submit_a_number(driver, client_a_number):
@@ -22,10 +18,10 @@ def submit_a_number(driver, client_a_number):
     try:
         # Open the website
         driver.get(url)
-        time.sleep(2)
+        time.sleep(.5)
 
         try:
-            accept_button = WebDriverWait(driver, 10).until(
+            accept_button = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'I Accept')]"))
             )
             if accept_button:
@@ -40,20 +36,20 @@ def submit_a_number(driver, client_a_number):
         # Find and interact with the input fields using WebDriverWait
         for i, digit in enumerate(digits):
             input_id = f"3e9af2d5-6fd2-44bf-9391-f86e83d609c4-{i}"
-            input_field = WebDriverWait(driver, 50).until(
+            input_field = WebDriverWait(driver, 15).until(
                 EC.presence_of_element_located((By.ID, input_id))
             )
             input_field.send_keys(digit)
             time.sleep(.3)
 
         # Submit the form    
-        submit_button = WebDriverWait(driver, 50).until(
+        submit_button = WebDriverWait(driver, 15).until(
             EC.element_to_be_clickable((By.ID, 'btn_submit'))
         )
         submit_button.click()
 
         # Wait for the redirection to the new URL (adjust the timeout as needed)
-        WebDriverWait(driver, 50).until(
+        WebDriverWait(driver, 15).until(
             EC.url_to_be('https://acis.eoir.justice.gov/en/caseInformation')
         )
         return driver
