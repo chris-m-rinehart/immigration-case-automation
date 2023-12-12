@@ -85,12 +85,13 @@ def process_info(driver, content):
         strong_tags = soup.find_all('strong')
         span_tags = soup.find_all('span')
 
-        time.sleep(2)
+        time.sleep(1.2)
 
         # Extract date and time from the strong tags
         # (Modify the indices according to where the date and time are actually found)
 
         name_text = span_tags[5].get_text() if len(span_tags) > 5 else "Name not found"
+        appeal_text = span_tags[6].get_text() if len(span_tags) > 6 else "No appeal was received for this case"
         address_text = span_tags[7].get_text() if len(span_tags) > 7 else "Address not found"
         state_and_zip_text = span_tags[8].get_text() if len(span_tags) > 8 else "State and Zip not found"
 
@@ -100,12 +101,12 @@ def process_info(driver, content):
         return {
             "client_name": f"{name_text}",
             "court_date": f"{date_text} at {time_text}",
-            "address_name": f"{address_text} - {state_and_zip_text}"
+            "address_name": f"{address_text} - {state_and_zip_text}",
+            "appeal_info": f"{appeal_text}"
         }
     except Exception as e:
         print(f"An error occurred while retrieving court information: {e}")
         return None
-
 
 #MAIN CLASS
 def main():
@@ -155,7 +156,7 @@ def main():
 
     # Print all results at the end
     for result in results:
-        print(f"\nName and A-Number: {result['client_name']},\nCourt Date: {result['court_date']}\nAddress: {result['address_name']}\n")
+        print(f"\nName and A-Number: {result['client_name']},\nCourt Date: {result['court_date']}\nAddress: {result['address_name']}\nAppeal status: {result['appeal_info']}\n")
 
 if __name__ == "__main__":
     main()
