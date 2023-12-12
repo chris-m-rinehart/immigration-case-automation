@@ -156,6 +156,7 @@ def main():
 
     # Print all results at the end
     for result in results:
+        print(f"*********************************************\n")
         print(f"\nName and A-Number: {result['client_name']},\nCourt Date: {result['court_date']}\nAddress: {result['address_name']}\nAppeal status: {result['appeal_info']}\n")
 
 if __name__ == "__main__":
