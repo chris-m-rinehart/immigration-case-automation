@@ -30,10 +30,8 @@ def submit_a_number(driver, client_a_number):
             )
             if accept_button:
                 accept_button.click()
-            else:
-                print("Accept button not found. Continuing without clicking.")
         except Exception as e:
-            print(f"An error occurred when trying to click the accept button: {e} ")
+            print(f"Accept button not found. Continuing without clicking.")
             # If the pop-up doesn't exist or there's an error, continue
             pass
 
@@ -55,12 +53,12 @@ def submit_a_number(driver, client_a_number):
         submit_button.click()
 
         # Wait for the redirection to the new URL (adjust the timeout as needed)
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 50).until(
             EC.url_to_be('https://acis.eoir.justice.gov/en/caseInformation')
         )
         return driver
     except Exception as e:
-        print(f"An error occurred during submission: {e}")
+        print(f"An error occurred during submission: {traceback.print_exc()}")
         return None
 
 def get_relevant_info(driver, html_content):
